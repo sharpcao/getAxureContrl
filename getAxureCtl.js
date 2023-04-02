@@ -60,7 +60,7 @@ function get_layout() {
 			height: computedStyle.height,
 			innerText: x.textContent.trim()
 		}
-		switch(out.class){
+		switch (out.class) {
 			case 'text_field':
 				out['value'] = x.querySelector('input').value
 				break;
@@ -75,19 +75,9 @@ function get_layout() {
 			case 'box_2':
 			case 'box_3':
 				out['background_color'] = window.getComputedStyle(x.querySelector('div>:first-child')).backgroundColor
-				
+
 		}
 
-		
-		// if (out.class === 'text_field') {
-		// 	out['value'] = x.querySelector('input').value
-		// }
-		// if (out.class === 'list_box' | out.class === 'droplist') {
-		// 	out['options'] = x.querySelector('select').innerHTML.trim()
-		// }
-		// if (out.class === 'image') {
-		// 	out['src'] = x.querySelector('img').src
-		// }
 		return out
 
 	}
