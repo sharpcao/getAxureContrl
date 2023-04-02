@@ -40,9 +40,9 @@ function get_layout() {
 		paragraph: (x) => f_div_wrap(x, `<p id = '${x.name}' > ${x.innerText}</p>`),
 		label: (x) => f_div_wrap(x, `<label id = '${x.name}' > ${x.innerText}</label>`),
 		image: (x) => f_div_wrap(x, `<img id = '${x.name}' src = '${x.src}'>`),
-		box_1: (x) => f_div_wrap(x, `<div id = '${x.name}' style="background-color:${x.background_color}">${x.innerText}</div>`),
-		box_2: (x) => f_div_wrap(x, `<div id = '${x.name}' style="background-color:${x.background_color}">${x.innerText}</div>`),
-		box_3: (x) => f_div_wrap(x, `<div id = '${x.name}' style="background-color:${x.background_color}">${x.innerText}</div>`)
+		box_1: (x) => f_div_wrap(x, `<div id = '${x.name}' style="background-color:${x.background_color};display:flex"><div style="width:100%;align-self:center;text-align:center;">${x.innerText}</div></div>`),
+		box_2: (x) => f_div_wrap(x, `<div id = '${x.name}' style="background-color:${x.background_color};display:flex"><div style="width:100%;align-self:center;text-align:center;">${x.innerText}</div></div>`),
+		box_3: (x) => f_div_wrap(x, `<div id = '${x.name}' style="background-color:${x.background_color};display:flex"><div style="width:100%;align-self:center;text-align:center;">${x.innerText}</div></div>`)
 
 	}
 
