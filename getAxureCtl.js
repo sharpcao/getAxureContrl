@@ -6,7 +6,7 @@ function get_axure_ctl() {
 	* {
 		padding:0px;
 		margin:0px;
-		font-size:13px;
+		font-size:12px;
 	}
 	.ctldiv{
 		position: absolute;
