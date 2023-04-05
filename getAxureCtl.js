@@ -26,7 +26,7 @@ function get_axure_ctl() {
 `
 
     function f_div_wrap(x, main) {
-        return `<div class = "ctlDiv" style = "left:${x.left};top:${x.top};width:${x.width};height:${x.height}"> ${main} </div> `
+        return `<div class = "ctldiv" style = "left:${x.left};top:${x.top};width:${x.width};height:${x.height}"> ${main} </div> `
     }
 
     let convert_dict = {
