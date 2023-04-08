@@ -1,0 +1,108 @@
+* {
+    padding: 0px;
+    margin: 0px
+}
+
+.box {
+    padding: 3px;
+    display: flex;
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+}
+
+.logo {
+    width: 214px;
+    height: 74px;
+    flex-direction: row;
+}
+
+.header {
+    height: 74px;
+    flex-direction: row;
+}
+
+.form {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.tree {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.leftbar {
+    width: 252px;
+    flex-direction: column;
+}
+
+.main {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.topblank {
+    height: 74px;
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.nav {
+    height: 46px;
+    flex-direction: row;
+}
+
+.righwrap {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.filesicon {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.filesarea {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.space {
+    height: 60px;
+    flex-direction: row;
+}
+
+.account {
+    width: 283px;
+    height: 74px;
+    flex-direction: row;
+}
+
+.filepreview {
+    height: 90px;
+    flex-direction: row;
+}
+
+.fileproperty {
+    width: 373px;
+    flex-direction: column;
+}
+
+.fileinfo {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.filetab {
+    height: 60px;
+    flex-direction: row;
+}

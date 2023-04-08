@@ -17,16 +17,25 @@ let arr = Array.from(doc, x => {
     }
 
 }).sort((a, b) => { return (b.left+b.top) - (a.left+a.top) })
-//从内到外排序，方便找父元素
+//近似从内到外排序，方便找父元素
 
-for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = i + 1; i < arr.length; j++) {
-        console.log(i, j)
-        if (isChild(arr[i], arr[j])) {
-            arr[i]['parent'] = arr[j]['name']
-            break
+for (let i = 0; i < arr.length; i++) {
+    let real_parent = -1
+    for (let j = 0; j < arr.length; j++) {
+        //  console.log(i, j)
+        if (i==j){ 
+            continue
+        }else if (isChild(arr[i], arr[j])) {
+            if (real_parent ===-1){
+                real_parent = j
+            }else if (isChild(arr[j], arr[real_parent])){
+                real_parent = j
+            }
+
+
         }
     }
+    if (real_parent>0) arr[i]['parent'] = arr[real_parent]['name'] 
 }
 
 
@@ -89,20 +98,21 @@ function get_css_style(){
         if (nodeflex =='row' & x.width_auto) bflexgrow = true
         if (nodeflex =='column' & x.height_auto) bflexgrow =true
 
-        return `.${x.name} {
-            ${x.width_auto? '' : 'width:' + x.width + 'px;'}
-            ${x.height_auto? '' : 'height:' + x.height + 'px;'}
-            ${bflexgrow? 'flex-grow:1;' : ''}
-            flex-direction:${flexdirection};
-            }`
+        return `.${x.name} {` +
+            `${x.width_auto? '' : 'width:' + x.width + 'px;'}` +
+            `${x.height_auto? '' : 'height:' + x.height + 'px;'}`+
+            `${bflexgrow? 'flex-grow:1;' : ''}`+
+            `flex-direction:${flexdirection};}`
+
    }).reverse().join('\n')
+
    return `<style> 
-                *{padding:0px;margin:0px}
-                .box{padding:3px; display:flex;border:1px solid red; box-sizing:border-box;}
-                html,body {height:100%;}
-                body{display:flex;}
-                ${main_css}
-            </style>`
+    *{padding:0px;margin:0px}
+    .box{padding:3px; display:flex;border:1px solid red; box-sizing:border-box;}
+    html,body {height:100%;}
+    body{display:flex;}
+    ${main_css}
+</style>`
 }
 
 function get_axure_layout() {
