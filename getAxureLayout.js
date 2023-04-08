@@ -1,3 +1,4 @@
+
 let doc = document.querySelectorAll("[data-label]")
 let arr = Array.from(doc, x => {
     let computedStyle = window.getComputedStyle(x)
@@ -13,8 +14,8 @@ let arr = Array.from(doc, x => {
         parent: "app"
     }
 
-}).sort((a, b) => { return parseInt(b.left) - parseInt(a.left) })
-
+}).sort((a, b) => { return (b.left+b.top) - (a.left+a.top) })
+//从内到外排序，方便找父元素
 
 for (let i = 0; i < arr.length - 1; i++) {
     for (let j = i + 1; i < arr.length; j++) {
@@ -27,10 +28,21 @@ for (let i = 0; i < arr.length - 1; i++) {
 }
 
 
-function getChildren(parentName = "") {
+function getChildren(parentName) {
     return arr.filter(x => (x.parent === parentName)).sort((a, b) => {
-        return Math.min(a.left + a.top, b.left + b.top)
+        return ((a.left + a.top) - (b.left + b.top))
     })
+    //子元素从左上到右下排
+}
+
+function getChildrenFlexdirection(parentName){
+    let children = getChildren(parentName)
+    if (children.length <=1){
+        return "row"
+    }else{
+        return (children[0].top + children[0].height > children[1].top) ? "row":"column"
+    }
+
 }
 
 function getNode(node) {
@@ -47,8 +59,7 @@ function getLayoutDiv(name) {
     let node = getNode(name)
     if (node.length === 0) return ""
 
-    let out_html = `<div id = "${node.name}" class="box">\n`
-
+    let out_html = `<div class = "${node.name} box">\n`
     let children = getChildren(name)
 
     for (let i = 0; i < children.length; i++) {
@@ -59,13 +70,15 @@ function getLayoutDiv(name) {
 }
 function get_css_style(){
 
-   let main_css = (arr.map(x=>{
-        return `#${x.name} {
+   let main_css = arr.map(x=>{
+        let flexdirection = getChildrenFlexdirection(x.name)
+        return `.${x.name} {
             width:${x.width}px;
             height:${x.height}px;
+            flex-direction:${flexdirection}
             }`
-   }).reverse()).join('\n')
-   return `<style> \n*{padding:0px;margin:0px} .box{padding:3px; 
+   }).reverse().join('\n')
+   return `<style> \n*{padding:0px;margin:0px} .box{padding:3px; display:flex;
    border:1px solid red; box-sizing:border-box;} \n` + main_css + `\n</style>`
 }
 
@@ -74,4 +87,7 @@ function get_axure_layout() {
     return {div:getLayoutDiv(node.name), css:get_css_style()}
 }
 
-get_axure_layout()
+let out = get_axure_layout()
+console.log(out.div)
+console.log(out.css)
+
