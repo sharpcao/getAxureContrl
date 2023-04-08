@@ -38,7 +38,13 @@ function getChildren(parentName) {
 }
 
 function getChildrenFlexdirection(parentName){
+    
     let children = getChildren(parentName)
+
+    if (parentName == 'main'){
+        console.log(children);
+    }
+
     if (children.length <=1){
         return "row"
     }else{
@@ -55,8 +61,8 @@ function getNode(node) {
 }
 
 function isChild(child, parent) {
-    return (child.left >= parent.left & child.left+child.width < parent.left+parent.width &
-        child.top >= parent.top & child.top +child.height < parent.top+parent.height) ? true : false
+    return (child.left >= parent.left & child.left+child.width <= parent.left+parent.width &
+        child.top >= parent.top & child.top +child.height <= parent.top+parent.height) ? true : false
 }
 
 function getLayoutDiv(name) {
