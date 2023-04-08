@@ -10,6 +10,8 @@ let arr = Array.from(doc, x => {
         top: parseInt(computedStyle.top),
         width: parseInt(computedStyle.width),
         height: parseInt(computedStyle.height),
+        width_auto: (window.getComputedStyle(x.querySelector('div')).borderRightWidth=="0px")? true:false,
+        height_auto: (window.getComputedStyle(x.querySelector('div')).borderBottomWidth=="0px")? true:false,
         innerText: x.textContent.trim(),
         parent: "app"
     }
@@ -42,7 +44,10 @@ function getChildrenFlexdirection(parentName){
     }else{
         return (children[0].top + children[0].height > children[1].top) ? "row":"column"
     }
+}
 
+function getNodeFlexdirection(node){
+    return getChildrenFlexdirection(node.parent)
 }
 
 function getNode(node) {
@@ -50,8 +55,8 @@ function getNode(node) {
 }
 
 function isChild(child, parent) {
-    return (child.left > parent.left & child.left+child.width < parent.left+parent.width &
-        child.top > parent.top & child.top +child.height < parent.top+parent.height) ? true : false
+    return (child.left >= parent.left & child.left+child.width < parent.left+parent.width &
+        child.top >= parent.top & child.top +child.height < parent.top+parent.height) ? true : false
 }
 
 function getLayoutDiv(name) {
@@ -68,18 +73,30 @@ function getLayoutDiv(name) {
     out_html += `</div>\n`
     return out_html
 }
+
 function get_css_style(){
 
    let main_css = arr.map(x=>{
         let flexdirection = getChildrenFlexdirection(x.name)
+        let nodeflex = getNodeFlexdirection(x)
+        let bflexgrow=false
+        if (nodeflex =='row' & x.width_auto) bflexgrow = true
+        if (nodeflex =='column' & x.height_auto) bflexgrow =true
+
         return `.${x.name} {
-            width:${x.width}px;
-            height:${x.height}px;
-            flex-direction:${flexdirection}
+            ${x.width_auto? '' : 'width:' + x.width + 'px;'}
+            ${x.height_auto? '' : 'height:' + x.height + 'px;'}
+            ${bflexgrow? 'flex-grow:1;' : ''}
+            flex-direction:${flexdirection};
             }`
    }).reverse().join('\n')
-   return `<style> \n*{padding:0px;margin:0px} .box{padding:3px; display:flex;
-   border:1px solid red; box-sizing:border-box;} \n` + main_css + `\n</style>`
+   return `<style> 
+                *{padding:0px;margin:0px}
+                .box{padding:3px; display:flex;border:1px solid red; box-sizing:border-box;}
+                html,body {height:100%;}
+                body{display:flex;}
+                ${main_css}
+            </style>`
 }
 
 function get_axure_layout() {
